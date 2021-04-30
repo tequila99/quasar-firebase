@@ -1,0 +1,43 @@
+// app global css in SCSS form
+// app global css
+@font-face {
+  font-family: BarnaulGrotesk;
+  src: url(../assets/fonts/BarnaulGrotesk-Reg.woff);
+
+}
+@font-face {
+  font-family: BarnaulGroteskMedium;
+  src: url(../assets/fonts/BarnaulGroteskMedium-Reg.woff);
+}
+
+@font-face {
+  font-family: BarnaulGroteskBold;
+  src: url(../assets/fonts/BarnaulGroteskBold-Reg.woff);
+}
+
+* {
+  box-sizing: content-box;;
+}
+
+body {
+  font-family: 'BarnaulGrotesk';
+  box-sizing: content-box;
+}
+
+.regular {
+  font-family: 'BarnaulGrotesk';
+}
+
+.medium {
+  font-family: 'BarnaulGroteskMedium';
+}
+
+.bold {
+  font-family: 'BarnaulGroteskBold';
+}
+
+#q-app {
+  font-family: 'BarnaulGrotesk';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

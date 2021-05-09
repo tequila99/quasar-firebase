@@ -5,7 +5,7 @@
         <q-btn
           flat
           round
-          icon="menu"
+          icon="o_menu"
           size='lg'
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
@@ -16,7 +16,7 @@
         </q-toolbar-title>
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->
-        <q-btn icon='fas fa-sign-out-alt' size='lg' flat round class='q-mx-sm gt-xs' @click='logout'/>
+        <q-btn icon='o_logout' size='lg' flat round class='q-mx-sm gt-xs' @click='logout'/>
       </q-toolbar>
     </q-header>
 
@@ -34,11 +34,20 @@
             </q-avatar>
           </q-item-section>
 
-        <q-item-section>
-          <q-item-label class="bold">{{ user.displayName || "( Имя не задано )" }}</q-item-label>
-          <q-item-label caption lines="1">{{ user.email }}</q-item-label>
-        </q-item-section>
-      </q-item>
+          <q-item-section>
+            <q-item-label class="bold">{{ user.displayName || "( Имя не задано )" }}</q-item-label>
+            <q-item-label caption lines="1">{{ user.email }}</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-separator />
+        <q-item clickable v-ripple to='/notes'>
+          <q-item-section avatar>
+            <q-icon name='o_notes' />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label> Заметки </q-item-label>
+          </q-item-section>
+        </q-item>
 
       </q-list>
     </q-drawer>

@@ -6,6 +6,7 @@ import auth from './auth'
 import loading from './loading'
 import logs from './logs'
 import user from './user'
+import notes from './notes'
 
 Vue.use(Vuex)
 
@@ -20,7 +21,8 @@ export default function (/* { ssrContext } */) {
       auth,
       loading,
       logs,
-      user
+      user,
+      notes
     },
     mutations: {
       ...vuexfireMutations

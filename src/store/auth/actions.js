@@ -17,12 +17,16 @@ export const login = async function (_, { email, password }) {
 export const loginGoogle = async function (_) {
   const { user } = await loginGooglePopup()
   const id = user.uid
-  await firestore().collection('users').doc(id).set(new User({ id, ...user }))
-  if (!user.phoneNumber) {
-    router.push({ path: '/user/profile' })
-  } else {
-    router.push({ path: '/' })
-  }
+  firestore().collection('users').doc(id).get()
+    .then(snapshot => {
+      if (!snapshot.exists) {
+        firestore().collection('users').doc(id).set(new User({ id, ...user }))
+        if (user.phoneNumber) {
+          return router.push({ path: '/user/profile' })
+        }
+      }
+      return router.push({ path: '/' })
+    })
 }
 
 export const logout = async function (_) {

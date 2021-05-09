@@ -73,7 +73,10 @@ export default async ({ store, Vue, router, redirect }) => {
       isReady: true,
       uid: user?.uid || null
     })
-    if (user?.uid) store.dispatch('user/getCurrentUser', { id: user.uid })
+    if (user?.uid) {
+      store.dispatch('user/getCurrentUser', { id: user.uid })
+      store.dispatch('notes/getListNotes', { id: user.uid })
+    }
     if (user && initialAuthState) {
       router.push({ path: '/' })
     } else {

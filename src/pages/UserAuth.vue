@@ -1,19 +1,21 @@
 <template lang='pug'>
   q-page(padding)
-    h5.text-center.q-mt-xl {{ getAuthTitle }}
+    h5.text-center.text-primary.q-mt-lg {{ getAuthTitle }}
     q-form.authentication.q-px-md.q-gutter-y-sm(ref="emailAuthenticationForm" @submit="onSubmit")
-      q-input(
+      q-input.tw-rounded-md(
         v-model="email"
         outlined
         color="primary"
         lazy-rules="lazy-rules"
         name="email"
-        label="Login"
-        :rules='[val => !!val || "*Field is required", val => val.includes("@") && val.includes(".") || "*Please Provide a valid email"]'
+        label="Email"
+        type='email'
+        :rules='[val => !!val || "Введите адрес электронной почты"]'
         )
           template(v-slot:prepend)
             q-icon(name='far fa-envelope')
-      q-input(
+          q-tooltip Введите адрес электронной почты в качестве логина для входа в программу
+      q-input.tw-rounded-md(
         v-model="password"
         for="password"
         name="password"
@@ -23,7 +25,7 @@
         color="primary"
         data-cy="password"
         label="Password"
-        :rules='[val => !!val || "*Field is required"]'
+        :rules='[val => !!val || "Введите пароль"]'
         :type="isPwd ? 'password' : 'text'"
         @keyup.enter="onSubmit()"
       )
@@ -33,7 +35,8 @@
           q-icon.cursor-pointer(
             :name="isPwd ? 'visibility_off' : 'visibility'" @click="isPwd = !isPwd"
           )
-      q-input(
+        q-tooltip {{ isRegistration ? 'Укажите пароль для регистрации в программе' : 'Введите пароль для входа в программу'}}
+      q-input.tw-rounded-md(
         v-if="isRegistration"
         lazy-rules="lazy-rules"
         outlined
@@ -42,7 +45,7 @@
         data-cy="verifyPassword"
         label="Verify password"
         v-model="passwordMatch"
-        :rules='[ val => !!val || "*Field is required", val => val === password || "*Passwords dont match" ]'
+        :rules='[ val => !!val || "Введите пароль повторно", val => val === password || "Пароли не совпадают" ]'
         :type="isPwd ? 'password' : 'text'"
         @keyup.enter="onSubmit();"
       )
@@ -52,26 +55,28 @@
           q-icon.cursor-pointer(
             :name="isPwd ? 'visibility_off' : 'visibility'" @click="isPwd = !isPwd"
           )
-      q-btn.full-width.q-mt-sm(
+        q-tooltip Повторите ввод пароля для регистрации в программе
+      q-btn.full-width.q-mt-sm.tw-rounded-md(
         color="primary"
         data-cy="submit"
         padding="md xs"
         type="submit"
         :icon='isRegistration ? "fas fa-user-plus" : "fas fa-sign-in-alt"'
         :label="getAuthButtonLabel")
-      q-btn.full-width.q-mt-sm(
+      q-btn.full-width.q-mt-sm.tw-rounded-md(
         color="secondary"
         padding="md xs"
         label="Войти с помощью Google"
         icon='fab fa-google'
         @click='handleLoginGoogle'
       )
-      p.q-mt-md.q-mb-none.text-center
-        router-link.text-blue(:to="routeAuthentication")
-          span(v-if="isRegistration") У меня есть учетная запись
-          span(v-else) Создать новый аккаунт
-      p.q-ma-sm.text-center
-        router-link.text-blue(to="forgotPassword") Я не помню пароль
+      .q-ml-lg.q-mt-lg.text-weight-medium
+        p
+          router-link.text-blue(:to="routeAuthentication")
+            span(v-if="isRegistration") У меня есть учетная запись
+            span(v-else) Создать новый аккаунт
+        p
+          router-link.text-blue(to="forgotPassword") Я не помню пароль
 </template>
 
 <script>
@@ -82,10 +87,10 @@ export default {
   name: 'UserAuth',
   computed: {
     getAuthTitle () {
-      return this.isRegistration ? 'Зарегистрироваться в системе' : 'Войти в систему'
+      return this.isRegistration ? 'Регистрация в программе' : 'Вход в программу'
     },
     getAuthButtonLabel () {
-      return this.isRegistration ? 'Регистрация' : 'Вход в систему'
+      return this.isRegistration ? 'Зарегистрироваться' : 'Войти'
     },
     isRegistration () {
       return this.$route.name === 'Register'

@@ -23,7 +23,16 @@ export const delNoteData = async (_, { id }) => {
     .delete()
 }
 
-export const addNoteData = async ({ rootGetters }, payload) => {
+export const updateNote = async (_, { id, ...data }) => {
+  firestore().collection('notes')
+    .doc(id)
+    .update({
+      ...data,
+      updatedAt: Date.now()
+    })
+}
+
+export const addNote = async ({ rootGetters }, payload) => {
   const userRef = firestore().doc(`users/${rootGetters['user/currentUser'].id}`)
   firestore().collection('notes')
     .add({

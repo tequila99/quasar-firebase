@@ -7,7 +7,13 @@
           enter-active-class="animated fadeIn slow"
           leave-active-class="animated fadeOut slow"
         )
-        note-item.tw-mt-4(v-for='note in listNotes' :key='note.id' :value='note' @delete='handleDelete')
+        note-item.tw-mt-4(
+          v-for='note in listNotes'
+          :key='note.id'
+          :value='note'
+          @delete='handleDelete'
+          @tag='handleTag'
+        )
       q-page-sticky(position='bottom-right' :offset='fabPos')
         q-fab(
           icon='o_add'
@@ -52,6 +58,9 @@ export default {
     },
     handleAdd () {
       this.$router.push('/notes/add')
+    },
+    handleTag (tag) {
+      console.log(tag)
     },
     handleDelete (id) {
       this.$q.dialog({

@@ -1,6 +1,6 @@
 <template lang='pug'>
   q-page
-    note-form(:value='currentNote' @input='handleSaveNote')
+    note-form(@input='handleSaveNote')
 </template>
 
 <script>
@@ -11,21 +11,12 @@ export default {
   props: {},
   data () {
     return {
-      actionComplete: false,
-      currentNote: {
-        title: '',
-        text: '',
-        createdAt: 0,
-        updatedAt: 0
-      }
+      actionComplete: false
     }
-  },
-  watch: {},
-  computed: {
   },
   methods: {
     ...mapActions({
-      add: 'notes/addNoteData',
+      add: 'notes/addNote',
       showError: 'logs/showError'
     }),
     async handleSaveNote (note) {
@@ -41,8 +32,6 @@ export default {
       }
     }
   },
-  created () {},
-  mounted () {},
   beforeRouteLeave (to, from, next) {
     if (this.actionComplete) return next()
     this.$q.dialog({
@@ -63,6 +52,3 @@ export default {
   components: { NoteForm }
 }
 </script>
-
-<style lang='scss' scoped>
-</style>

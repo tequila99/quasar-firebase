@@ -1,12 +1,26 @@
 <template lang='pug'>
   .tw-max-w-2xl.tw-px-8.tw-py-3.tw-mx-auto.tw-bg-gray-50.tw-rounded-md.tw-shadow-md
     .tw-flex.tw-items-center
-      span.tw-text-xs.tw-font-light.tw-text-gray-600 {{ relativeDate(value.createdAt) }} назад
+      span.tw-text-xs.tw-font-light.tw-text-gray-600 обновлено {{ relativeDate(value.updatedAt) }} назад
     .tw-mt-2
       .tw-truncate.tw-mb-2
-        a.tw-text-xl.tw-font-bold.tw-text-gray-700(href='#') {{ value.title }}
-        q-tooltip {{ value.title }}
+        //- a.tw-text-xl.tw-font-bold.tw-text-gray-700(href='#') {{ value.title }}
+        router-link.tw-text-xl.tw-font-bold.tw-text-gray-700(:to='`/notes/${value.id}`')  {{ value.title }}
+        //- a.tw-text-xl.tw-font-bold.tw-text-gray-700(:to='`/notes/${value.id}`')  {{ value.title }}
+          q-tooltip {{ value.title }}
       p.tw-text-gray-600.ellipsis-3-lines {{ value.text }}
+    .tw-mt-4.tw-flex(v-if='tags.length')
+      q-chip(
+        v-for='tag in tags'
+        :key='tag'
+        :label='tag'
+        outline
+        square
+        color='primary'
+        size='0.7rem'
+        clickable
+        @click='$emit("tag", tag)'
+      )
     .tw-mt-4.tw-flex.tw-items-center.tw-justify-between
       .tw-flex.tw-items-center
         q-avatar(
@@ -88,6 +102,9 @@ export default {
     }),
     isOwner () {
       return this.currentUser.id === this.value.owner.id
+    },
+    tags () {
+      return this.value.tags && Array.isArray(this.value.tags) ? this.value.tags : []
     }
   },
   methods: {
